@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+const ExpressError = require("./expressError");
 
 app.use(express.json())
 
@@ -44,4 +45,35 @@ const calcMode = (nums) => {
     return max;
 }
 
+const stringToArr = (nums) => {
+  let numsArr = nums.split(',').map(Number)
+  return numsArr
+}
 
+app.get('/mean', (req, res) => {
+    let nums = request.query.nums
+    let numsArr = stringToArr(nums)
+    let meanResult = calcMean(numsArr)
+    
+    let result = {
+      operation: 'mean',
+      result: meanResult
+    }
+    res.send(result)
+})
+
+
+// error handler
+app.use(function (err, req, res, next) {
+  res.status(err.status || 500);
+
+  return res.json({
+    error: err,
+    message: err.message,
+  });
+});
+
+
+app.listen(3000, () => {
+  console.log("Server running on port 3000");
+});
