@@ -1,5 +1,5 @@
 const express = require("express");
-var request = require("request");
+const request = require("request");
 const ExpressError = require("./expressError");
 const { stringToArr, calcMean, calcMedian, calcMode } = require("./helpers")
 
