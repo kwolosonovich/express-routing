@@ -1,6 +1,7 @@
 const express = require("express");
-const app = express();
 const ExpressError = require("./expressError");
+
+const app = express();
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
@@ -52,10 +53,12 @@ const stringToArr = (nums) => {
   return numsArr
 }
 
+// homepage route
 app.get("/", function (req, res) {
   return res.send("Express Routing");
 });
 
+// mean route
 app.get('/mean', (req, res) => {
     let nums = request.query.nums
     let numsArr = stringToArr(nums)
