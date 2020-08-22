@@ -54,13 +54,14 @@ const stringToArr = (nums) => {
 };
 
 // homepage route
-app.get("/", function (request, res) {
+app.get("/", function (request, res, next) {
     return res.send("Express Routing");
 });
 
 // mean route
-app.get("/mean", (request, res) => {
+app.get("/mean", (request, res, next) => {
     let nums = request.query.nums;
+    if (!nums) throw new ExpressError('Numbers not found', 404)
     let numsArr = stringToArr(nums);
     let meanResult = calcMean(numsArr);
 
@@ -72,8 +73,9 @@ app.get("/mean", (request, res) => {
 });
 
 // median route
-app.get("/median", (request, res) => {
+app.get("/median", (request, res, next) => {
     let nums = request.query.nums;
+    if (!nums) throw new ExpressError("Numbers not found", 404);
     let numsArr = stringToArr(nums);
     let medianResult = calcMedian(numsArr);
 
@@ -85,8 +87,9 @@ app.get("/median", (request, res) => {
 });
 
 // mode route
-app.get("/mode", (request, res) => {
+app.get("/mode", (request, res, next) => {
     let nums = request.query.nums;
+    if (!nums) throw new ExpressError("Numbers not found", 404);
     let numsArr = stringToArr(nums);
     let modeResult = calcMode(numsArr);
 
@@ -97,7 +100,14 @@ app.get("/mode", (request, res) => {
     res.send(result);
 });
 
-// error handler
+
+// route error handler
+app.use(function (req, res, next) {
+  const notFoundError = new ExpressError("Requested route not Found", 404);
+  return next(notFoundError);
+});
+
+// generic error handler
 app.use(function (err, req, res, next) {
     res.status(err.status || 500);
 
