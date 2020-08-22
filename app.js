@@ -10,8 +10,8 @@ app.use(express.urlencoded({ extended: true }));
 
 
 // homepage route
-app.get("/", function (request, res, next) {
-    return res.send("Express Routing");
+app.get("/", (request, res, next) => {
+  return res.send("Express Routing");
 });
 
 // mean route
