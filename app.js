@@ -3,6 +3,8 @@ const app = express();
 const ExpressError = require("./expressError");
 
 app.use(express.json())
+app.use(express.urlencoded({ extended: true }));
+
 
 // statistical operation
 const calcMean = (nums) => {
@@ -49,6 +51,10 @@ const stringToArr = (nums) => {
   let numsArr = nums.split(',').map(Number)
   return numsArr
 }
+
+app.get("/", function (req, res) {
+  return res.send("Express Routing");
+});
 
 app.get('/mean', (req, res) => {
     let nums = request.query.nums
